@@ -1,0 +1,57 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Permission;
+use App\Models\Role;
+use App\Models\User;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+
+class RoleSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $user = User::create([
+            'name' => "ebonifaz",
+            'email' => "ebonifaz@111.com.ec",
+            'password' => Hash::make('enrique123'),
+
+        ]);
+        
+        $rol = Role::create([
+            'name' => 'administrador',
+        ]);
+ 
+        $rol->users()->save($user);
+        
+        $permissions_view = Permission::create([
+            'name'  => 'Permiso ver',
+            'slug'  => 'permission-view'
+        ]);
+        $permissions_view->roles()->save($rol);
+
+        $permissions_edit = Permission::create([
+            'name'  => 'Permiso editar',
+            'slug'  => 'permission-edit'
+        ]);
+        $permissions_edit->roles()->save($rol);
+
+        $permissions_delete = Permission::create([
+            'name'  => 'Permiso borrar',
+            'slug'  => 'permission-delete'
+        ]);
+        $permissions_delete->roles()->save($rol);
+
+        $permissions_create = Permission::create([
+            'name'  => 'Permiso crear',
+            'slug'  => 'permission-create'
+        ]);
+        $permissions_create->roles()->save($rol);
+    }
+}
